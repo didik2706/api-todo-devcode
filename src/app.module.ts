@@ -10,7 +10,7 @@ import { Todo } from './todos/entities/todo.entity';
 config();
 
 const {
-  MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASS, MYSQL_NAME
+  MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DBNAME
 } = process.env;
 
 @Module({
@@ -20,8 +20,8 @@ const {
       host: MYSQL_HOST,
       port: +MYSQL_PORT,
       username: MYSQL_USER,
-      password: MYSQL_PASS,
-      database: MYSQL_NAME,
+      password: MYSQL_PASSWORD,
+      database: MYSQL_DBNAME,
       models: [ActivityGroup, Todo],
       autoLoadModels: true
     }),
