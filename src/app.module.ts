@@ -21,6 +21,7 @@ const {
       password: MYSQL_PASS,
       database: MYSQL_NAME,
       models: [ActivityGroup],
+      autoLoadModels: true
     }),
     ActivityGroupsModule
   ],

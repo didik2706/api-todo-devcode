@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters } from '@nestjs/common';
 import { ActivityGroupsService } from './activity-groups.service';
 import { CreateActivityGroupDto } from './dto/create-activity-group.dto';
 import { UpdateActivityGroupDto } from './dto/update-activity-group.dto';
@@ -8,27 +8,57 @@ export class ActivityGroupsController {
   constructor(private readonly activityGroupsService: ActivityGroupsService) {}
 
   @Post()
-  create(@Body() createActivityGroupDto: CreateActivityGroupDto) {
-    return this.activityGroupsService.create(createActivityGroupDto);
+  async create(@Body() createActivityGroupDto: CreateActivityGroupDto) {
+    const data = await this.activityGroupsService.create(createActivityGroupDto);
+
+    return {
+      success: "Success",
+      message: "Success",
+      data
+    }
   }
 
   @Get()
-  findAll() {
-    return this.activityGroupsService.findAll();
+  async findAll() {
+    const data = await this.activityGroupsService.findAll();
+
+    return {
+      success: "Success",
+      message: "Success",
+      data
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.activityGroupsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const data = await this.activityGroupsService.findOne(+id);
+
+    return {
+      success: "Success",
+      message: "Success",
+      data
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateActivityGroupDto: UpdateActivityGroupDto) {
-    return this.activityGroupsService.update(+id, updateActivityGroupDto);
+  async update(@Param('id') id: string, @Body() updateActivityGroupDto: UpdateActivityGroupDto) {
+    const data = await this.activityGroupsService.update(+id, updateActivityGroupDto);
+
+    return {
+      success: "Success",
+      message: "Success",
+      data
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.activityGroupsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.activityGroupsService.remove(+id);
+
+    return {
+      success: "Success",
+      message: "Success",
+      data: {}
+    }
   }
 }

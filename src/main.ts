@@ -8,7 +8,7 @@ async function bootstrap() {
   // setup compression
   app.use(compression({ level: 1 }));
   // setup validation pipe
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe());
   // listen server
   await app.listen(3000);
 }
