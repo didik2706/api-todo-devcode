@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -22,6 +22,9 @@ const {
       database: MYSQL_NAME,
       models: [ActivityGroup],
       autoLoadModels: true
+    }),
+    CacheModule.register({
+      isGlobal: true
     }),
     ActivityGroupsModule
   ],

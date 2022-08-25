@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, CacheInterceptor } from '@nestjs/common';
 import { ActivityGroupsService } from './activity-groups.service';
 import { CreateActivityGroupDto } from './dto/create-activity-group.dto';
 import { UpdateActivityGroupDto } from './dto/update-activity-group.dto';
 
+@UseInterceptors(CacheInterceptor)
 @Controller('activity-groups')
 export class ActivityGroupsController {
   constructor(private readonly activityGroupsService: ActivityGroupsService) {}
