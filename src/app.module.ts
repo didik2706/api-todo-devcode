@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { config } from "dotenv";
 import { ActivityGroupsModule } from './activity-groups/activity-groups.module';
 import { ActivityGroup } from './activity-groups/entities/activity-group.entity';
+import { TodosModule } from './todos/todos.module';
+import { Todo } from './todos/entities/todo.entity';
 config();
 
 const {
@@ -20,13 +22,14 @@ const {
       username: MYSQL_USER,
       password: MYSQL_PASS,
       database: MYSQL_NAME,
-      models: [ActivityGroup],
+      models: [ActivityGroup, Todo],
       autoLoadModels: true
     }),
     CacheModule.register({
       isGlobal: true
     }),
-    ActivityGroupsModule
+    ActivityGroupsModule,
+    TodosModule
   ],
   controllers: [AppController],
   providers: [AppService],

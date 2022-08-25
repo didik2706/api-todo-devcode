@@ -1,4 +1,5 @@
-import { Column, Model, Table } from "sequelize-typescript";
+import { Column, HasMany, Model, Table } from "sequelize-typescript";
+import { Todo } from "src/todos/entities/todo.entity";
 
 @Table
 export class ActivityGroup extends Model {
@@ -7,4 +8,7 @@ export class ActivityGroup extends Model {
 
   @Column({ allowNull: false })
   title: string
+
+  @HasMany(() => Todo)
+  todos: Todo[]
 }
