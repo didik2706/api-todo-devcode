@@ -1,13 +1,9 @@
 import { IsIn, IsNotEmpty } from "class-validator";
 
-export class CreateTodoDto {
-  @IsNotEmpty()
+export class CreatetodoDto {
+  @IsNotEmpty({ message: "activity_group_id cannot be null" })
   activity_group_id: number
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: "title cannot be null" })
   title: string
-
-  @IsNotEmpty()
-  @IsIn(["very-high", "high", "medium", "low", "very-low"])
-  priority: string
 }

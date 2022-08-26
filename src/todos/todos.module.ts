@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import { TodosService } from './todos.service';
-import { TodosController } from './todos.controller';
+import { todosService } from './todos.service';
+import { todosController } from './todos.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Todo } from './entities/todo.entity';
-import { ActivityGroup } from 'src/activity-groups/entities/activity-group.entity';
+import { todo } from './entities/todo.entity';
+import { activity } from 'src/activity-groups/entities/activity-group.entity';
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([ActivityGroup, Todo])
+    SequelizeModule.forFeature([activity, todo])
   ],
-  controllers: [TodosController],
-  providers: [TodosService]
+  controllers: [todosController],
+  providers: [todosService]
 })
-export class TodosModule {}
+export class todosModule {}

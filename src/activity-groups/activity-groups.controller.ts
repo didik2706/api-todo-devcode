@@ -1,21 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, CacheInterceptor } from '@nestjs/common';
-import { ActivityGroupsService } from './activity-groups.service';
-import { CreateActivityGroupDto } from './dto/create-activity-group.dto';
-import { UpdateActivityGroupDto } from './dto/update-activity-group.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, CacheInterceptor, NotFoundException } from '@nestjs/common';
+import { activitysService } from './activity-groups.service';
+import { CreateactivityDto } from './dto/create-activity-group.dto';
+import { UpdateactivityDto } from './dto/update-activity-group.dto';
 
 @UseInterceptors(CacheInterceptor)
 @Controller('activity-groups')
-export class ActivityGroupsController {
-  constructor(private readonly activityGroupsService: ActivityGroupsService) {}
+export class activitysController {
+  constructor(private readonly activityGroupsService: activitysService) {}
 
   @Post()
-  async create(@Body() createActivityGroupDto: CreateActivityGroupDto) {
-    const data = await this.activityGroupsService.create(createActivityGroupDto);
+  async create(@Body() createactivityDto: CreateactivityDto) {
+    const data = await this.activityGroupsService.create(createactivityDto);
 
     return {
-      success: "Success",
+      status: "Success",
       message: "Success",
-      data
+      data: {
+        id: data.id,
+        email: data.email,
+        title: data.title,
+        created_at: data.createdAt,
+        updated_at: data.updatedAt      
+      }
     }
   }
 
@@ -24,9 +30,18 @@ export class ActivityGroupsController {
     const data = await this.activityGroupsService.findAll();
 
     return {
-      success: "Success",
+      status: "Success",
       message: "Success",
-      data
+      data: data.map(d => {
+        return {
+          id: d.id,
+          email: d.email,
+          title: d.title,
+          created_at: d.createdAt,
+          updated_at: d.updatedAt,
+          deleted_at: null
+        }
+      })
     }
   }
 
@@ -35,20 +50,34 @@ export class ActivityGroupsController {
     const data = await this.activityGroupsService.findOne(+id);
 
     return {
-      success: "Success",
+      status: "Success",
       message: "Success",
-      data
+      data: {
+        id: data.id,
+        email: data.email,
+        title: data.title,
+        created_at: data.createdAt,
+        updated_at: data.updatedAt,
+        deleted_at: null,
+      }
     }
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateActivityGroupDto: UpdateActivityGroupDto) {
-    const data = await this.activityGroupsService.update(+id, updateActivityGroupDto);
+  async update(@Param('id') id: string, @Body() updateactivityDto: UpdateactivityDto) {
+    const data = await this.activityGroupsService.update(+id, updateactivityDto);
 
     return {
-      success: "Success",
+      status: "Success",
       message: "Success",
-      data
+      data: {
+        id: data.id,
+        email: data.email,
+        title: data.title,
+        created_at: data.createdAt,
+        updated_at: data.updatedAt,
+        deleted_at: null
+      }
     }
   }
 
@@ -57,7 +86,7 @@ export class ActivityGroupsController {
     await this.activityGroupsService.remove(+id);
 
     return {
-      success: "Success",
+      status: "Success",
       message: "Success",
       data: {}
     }

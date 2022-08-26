@@ -1,10 +1,10 @@
 import { IsEmail, IsNotEmpty } from "class-validator";
 
-export class CreateActivityGroupDto {
-  @IsNotEmpty()
+export class CreateactivityDto {
+  @IsNotEmpty({ message: "email cannot be null" })
   @IsEmail()
   email: string
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: "title cannot be null" })
   title: string
 }

@@ -1,16 +1,16 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, CacheInterceptor, Query } from '@nestjs/common';
-import { TodosService } from './todos.service';
-import { CreateTodoDto } from './dto/create-todo.dto';
-import { UpdateTodoDto } from './dto/update-todo.dto';
+import { todosService } from './todos.service';
+import { CreatetodoDto } from './dto/create-todo.dto';
+import { UpdatetodoDto } from './dto/update-todo.dto';
 
 @UseInterceptors(CacheInterceptor)
 @Controller('todo-items')
-export class TodosController {
-  constructor(private readonly todosService: TodosService) {}
+export class todosController {
+  constructor(private readonly todosService: todosService) {}
 
   @Post()
-  async create(@Body() createTodoDto: CreateTodoDto) {
-    const data = await this.todosService.create(createTodoDto);
+  async create(@Body() createtodoDto: CreatetodoDto) {
+    const data = await this.todosService.create(createtodoDto);
 
     return {
       status: "Success",
@@ -26,7 +26,18 @@ export class TodosController {
     return {
       status: "Success",
       message: "Success",
-      data
+      data: data.map(d => {
+        return {
+          id: d.id,
+          title: d.title,
+          activity_group_id: d.activity_group_id,
+          is_active: "1",
+          priority: d.priority,
+          created_at: d.createdAt,
+          updated_at: d.updatedAt,
+          deleted_at: null
+        }
+      })
     }
   }
 
@@ -37,18 +48,36 @@ export class TodosController {
     return {
       status: "Success",
       message: "Success",
-      data
+      data: {
+        id: data.id,
+        title: data.title,
+        activity_group_id: data.activity_group_id,
+        is_active: "1",
+        priority: data.priority,
+        created_at: data.createdAt,
+        updated_at: data.updatedAt,
+        deleted_at: null
+      }
     }
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    const data = await this.todosService.update(+id, updateTodoDto);
+  async update(@Param('id') id: string, @Body() updatetodoDto: UpdatetodoDto) {
+    const data = await this.todosService.update(+id, updatetodoDto);
 
     return {
       status: "Success",
       message: "Success",
-      data
+      data: {
+        id: data.id,
+        title: data.title,
+        activity_group_id: data.activity_group_id,
+        is_active: "1",
+        priority: data.priority,
+        created_at: data.createdAt,
+        updated_at: data.updatedAt,
+        deleted_at: null
+      }
     }
   }
 

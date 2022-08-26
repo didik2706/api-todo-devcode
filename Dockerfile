@@ -16,11 +16,11 @@ COPY . .
 # Creates a "dist" folder with the production build
 RUN npm run build
 
-ENV MYSQL_HOST localhost
-ENV MYSQL_PORT 3306
-ENV MYSQL_USER didik27
-ENV MYSQL_PASS Didik.,.88
-ENV MYSQL_NAME db_todo_devcode
+# ENV MYSQL_HOST localhost
+# ENV MYSQL_PORT 3306
+# ENV MYSQL_USER didik27
+# ENV MYSQL_PASS Didik.,.88 
+# ENV MYSQL_NAME db_todo_devcode
 
 # Start the server using the production build
 CMD [ "node", "dist/main.js" ]

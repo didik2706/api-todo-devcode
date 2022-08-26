@@ -1,28 +1,28 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateActivityGroupDto } from './dto/create-activity-group.dto';
-import { UpdateActivityGroupDto } from './dto/update-activity-group.dto';
-import { ActivityGroup } from './entities/activity-group.entity';
+import { CreateactivityDto } from './dto/create-activity-group.dto';
+import { UpdateactivityDto } from './dto/update-activity-group.dto';
+import { activity } from './entities/activity-group.entity';
 
 @Injectable()
-export class ActivityGroupsService {
+export class activitysService {
   constructor(
-    @InjectModel(ActivityGroup)
-    private activityGroupModel: typeof ActivityGroup
+    @InjectModel(activity)
+    private activityGroupModel: typeof activity
   ){}
   
-  async create(createActivityGroupDto: CreateActivityGroupDto): Promise<ActivityGroup> {
+  async create(createactivityDto: CreateactivityDto): Promise<activity> {
     try {
       return await this.activityGroupModel.create({
-        email: createActivityGroupDto.email,
-        title: createActivityGroupDto.title
+        email: createactivityDto.email,
+        title: createactivityDto.title
       });
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
   }
 
-  async findAll(): Promise<ActivityGroup[]> {
+  async findAll(): Promise<activity[]> {
     try {
       return this.activityGroupModel.findAll({
         order: [["updatedAt", "DESC"]]
@@ -32,7 +32,7 @@ export class ActivityGroupsService {
     }
   }
 
-  async findOne(id: number): Promise<ActivityGroup> {
+  async findOne(id: number): Promise<activity> {
     const data = await this.activityGroupModel.findByPk(id);
 
     if (!data) {
@@ -42,7 +42,7 @@ export class ActivityGroupsService {
     return data;
   }
 
-  async update(id: number, updateActivityGroupDto: UpdateActivityGroupDto): Promise<ActivityGroup> {
+  async update(id: number, updateactivityDto: UpdateactivityDto): Promise<activity> {
     const data = await this.activityGroupModel.findByPk(id);
 
     if (!data) {
@@ -50,7 +50,7 @@ export class ActivityGroupsService {
     }
 
     return await data.update({
-      title: updateActivityGroupDto.title
+      title: updateactivityDto.title
     });
   }
 

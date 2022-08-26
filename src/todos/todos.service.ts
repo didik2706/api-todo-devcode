@@ -1,36 +1,35 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { ActivityGroup } from 'src/activity-groups/entities/activity-group.entity';
-import { CreateTodoDto } from './dto/create-todo.dto';
-import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Todo } from './entities/todo.entity';
+import { activity } from 'src/activity-groups/entities/activity-group.entity';
+import { CreatetodoDto } from './dto/create-todo.dto';
+import { UpdatetodoDto } from './dto/update-todo.dto';
+import { todo } from './entities/todo.entity';
 
 @Injectable()
-export class TodosService {
+export class todosService {
   constructor(
-    @InjectModel(Todo)
-    private todoModel: typeof Todo,
-    @InjectModel(ActivityGroup)
-    private activityGroupModel: typeof ActivityGroup
+    @InjectModel(todo)
+    private todoModel: typeof todo,
+    @InjectModel(activity)
+    private activityGroupModel: typeof activity
   ){}
 
-  async create(createTodoDto: CreateTodoDto): Promise<Todo> {
+  async create(createtodoDto: CreatetodoDto): Promise<todo> {
     const data = await this.activityGroupModel.findOne({
-      where: { id: createTodoDto.activity_group_id }
+      where: { id: createtodoDto.activity_group_id }
     });
 
     if (!data) {
-      throw new NotFoundException(`Todo With ID ${createTodoDto.activity_group_id} Not Found`)
+      throw new NotFoundException(`todo With ID ${createtodoDto.activity_group_id} Not Found`)
     }
 
     return this.todoModel.create({
-      activity_group_id: createTodoDto.activity_group_id,
-      title: createTodoDto.title,
-      priority: createTodoDto.priority,
+      activity_group_id: createtodoDto.activity_group_id,
+      title: createtodoDto.title
     });
   }
 
-  findAll(id?: number): Promise<Todo[]> {
+  findAll(id?: number): Promise<todo[]> {
     try {
       if (id == undefined) {
         return this.todoModel.findAll();
@@ -44,26 +43,26 @@ export class TodosService {
     }
   }
 
-  async findOne(id: number): Promise<Todo> {
+  async findOne(id: number): Promise<todo> {
     const data = await this.todoModel.findByPk(id);
     
     if (!data) {
-      throw new NotFoundException(`Todo With ID ${id} Not Found`)
+      throw new NotFoundException(`Todo with ID ${id} Not Found`)
     }
 
     return data;
   }
 
-  async update(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo> {
+  async update(id: number, updatetodoDto: UpdatetodoDto): Promise<todo> {
     const data = await this.todoModel.findByPk(id);
     
     if (!data) {
-      throw new NotFoundException(`Todo With ID ${id} Not Found`);
+      throw new NotFoundException(`Todo with ID ${id} Not Found`);
     }
 
     return await data.update({
-      title: updateTodoDto.title,
-      is_active: updateTodoDto.is_active
+      title: updatetodoDto.title,
+      is_active: updatetodoDto.is_active
     });
   }
 
@@ -71,7 +70,7 @@ export class TodosService {
     const data = await this.todoModel.findByPk(id);
     
     if (!data) {
-      throw new NotFoundException(`Todo With ID ${id} Not Found`);
+      throw new NotFoundException(`Todo with ID ${id} Not Found`);
     }
 
     await data.destroy();

@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { ActivityGroupsService } from './activity-groups.service';
-import { ActivityGroupsController } from './activity-groups.controller';
+import { activitysService } from './activity-groups.service';
+import { activitysController } from './activity-groups.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { ActivityGroup } from './entities/activity-group.entity';
+import { activity } from './entities/activity-group.entity';
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([ActivityGroup])
+    SequelizeModule.forFeature([activity])
   ],
-  controllers: [ActivityGroupsController],
-  providers: [ActivityGroupsService]
+  controllers: [activitysController],
+  providers: [activitysService]
 })
-export class ActivityGroupsModule {}
+export class activitysModule {}

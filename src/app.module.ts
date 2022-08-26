@@ -3,10 +3,10 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { config } from "dotenv";
-import { ActivityGroupsModule } from './activity-groups/activity-groups.module';
-import { ActivityGroup } from './activity-groups/entities/activity-group.entity';
-import { TodosModule } from './todos/todos.module';
-import { Todo } from './todos/entities/todo.entity';
+import { activitysModule } from './activity-groups/activity-groups.module';
+import { activity } from './activity-groups/entities/activity-group.entity';
+import { todosModule } from './todos/todos.module';
+import { todo } from './todos/entities/todo.entity';
 config();
 
 const {
@@ -22,14 +22,15 @@ const {
       username: MYSQL_USER,
       password: MYSQL_PASSWORD,
       database: MYSQL_DBNAME,
-      models: [ActivityGroup, Todo],
+      models: [activity, todo],
       autoLoadModels: true
     }),
     CacheModule.register({
-      isGlobal: true
+      isGlobal: true,
+      ttl: 10
     }),
-    ActivityGroupsModule,
-    TodosModule
+    activitysModule,
+    todosModule
   ],
   controllers: [AppController],
   providers: [AppService],

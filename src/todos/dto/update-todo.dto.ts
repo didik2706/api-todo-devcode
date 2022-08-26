@@ -1,6 +1,6 @@
 import { IsBoolean, IsNotEmpty, IsOptional } from "class-validator";
 
-export class UpdateTodoDto {
+export class UpdatetodoDto {
   @IsBoolean()
   @IsOptional()
   is_active?: boolean
