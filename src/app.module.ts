@@ -27,7 +27,7 @@ const {
     }),
     CacheModule.register({
       isGlobal: true,
-      ttl: 10
+      ttl: 1000
     }),
     activitysModule,
     todosModule
